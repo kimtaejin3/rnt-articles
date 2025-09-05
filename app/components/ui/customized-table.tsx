@@ -28,7 +28,9 @@ export function CustomizedTable({ columns, data }: ArticleTableProps) {
       <TableHead>
         <TableRow>
           {columns.map((item) => (
-            <TableCell sx={{ width: item.width }}>{item.header}</TableCell>
+            <TableCell key={item.key} sx={{ width: item.width }}>
+              {item.header}
+            </TableCell>
           ))}
         </TableRow>
       </TableHead>
@@ -36,7 +38,7 @@ export function CustomizedTable({ columns, data }: ArticleTableProps) {
         {data.map((item) => (
           <StyledTableRow key={item.id}>
             {columns.map((column) => (
-              <TableCell sx={{ width: column.width }}>
+              <TableCell key={column.key} sx={{ width: column.width }}>
                 {column.render(item[column.key])}
               </TableCell>
             ))}
