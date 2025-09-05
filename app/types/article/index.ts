@@ -4,4 +4,5 @@ export interface Article {
   myThink: string;
   date: string;
   tag: string;
+  link: string;
 }

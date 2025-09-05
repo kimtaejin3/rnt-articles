@@ -1,7 +1,8 @@
 import type { Route } from "./+types/home";
 import mockData from "../../public/mock-data.json";
 import styled from "@emotion/styled";
-import { ArticleTable } from "~/components/article/article-table";
+import ArticleTable from "~/components/article/article-table";
+import AddArticle from "~/components/article/add-article";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,7 +11,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader() {
   return mockData;
 }
 
@@ -20,7 +21,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <Container>
-        <Title>Read and Think a lot 📚</Title>
+        <Header>
+          <Title>Read and Think and Solve 📖</Title>
+          <AddArticle />
+        </Header>
         <ArticleTable articles={articles} />
       </Container>
     </>
@@ -28,7 +32,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 }
 
 const Container = styled.div`
-  max-width: 1400px;
+  max-width: 1180px;
   margin: 40px auto;
 `;
 
@@ -38,4 +42,10 @@ const Title = styled.h1`
   font-style: normal;
   margin-bottom: 20px;
   font-family: "Story Script", sans-serif;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

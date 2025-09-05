@@ -1,4 +1,5 @@
 import {
+  colors,
   Table,
   TableBody,
   TableCell,
@@ -17,7 +18,7 @@ interface ArticleTableProps {
   data: { id: number; [key: string]: any }[];
 }
 
-export function CustomizedTable({ columns, data }: ArticleTableProps) {
+export default function CustomizedTable({ columns, data }: ArticleTableProps) {
   return (
     <Table
       sx={{
@@ -51,7 +52,7 @@ export function CustomizedTable({ columns, data }: ArticleTableProps) {
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(even)": {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: colors.grey[50],
   },
   // hide last border
   "&:last-child td, &:last-child th": {
