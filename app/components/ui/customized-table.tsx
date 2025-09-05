@@ -24,6 +24,7 @@ export default function CustomizedTable({ columns, data }: ArticleTableProps) {
       sx={{
         backgroundColor: "white",
         borderRadius: "20px",
+        overflow: "hidden",
       }}
     >
       <TableHead>
