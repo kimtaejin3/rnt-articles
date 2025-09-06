@@ -1,4 +1,4 @@
-import { Button, Chip } from "@mui/material";
+import { Chip } from "@mui/material";
 import CustomizedTable from "../ui/customized-table";
 import type { Article } from "~/types/article";
 
@@ -26,7 +26,9 @@ const columns = [
     header: "제목",
     width: "auto",
     render: (value: { title: string; link: string }) => (
-      <a href={value.link}>{value.title}</a>
+      <a target="_blank" href={value.link}>
+        {value.title}
+      </a>
     ),
   },
   {
