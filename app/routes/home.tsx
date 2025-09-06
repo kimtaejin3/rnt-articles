@@ -6,6 +6,7 @@ import AddArticle from "~/components/article/add-article";
 import { Pagination } from "@mui/material";
 import Flex from "~/components/ui/flex";
 import { getArticles } from "~/remote/article";
+import { ArticlesSchema } from "~/types/article";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -15,22 +16,17 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const articles = await getArticles({ request });
+  const { articles, currentPage, totalItems, itemPerPage } = await getArticles({
+    request,
+  });
 
-  const url = new URL(request.url);
-  const page = parseInt(url.searchParams.get("page") || "1");
-
-  const itemPerPage = 10;
-  const paginatedArticles = articles.slice(
-    (page - 1) * itemPerPage,
-    page * itemPerPage
-  );
+  const parsedArticles = ArticlesSchema.parse(articles);
 
   return {
-    articles: paginatedArticles,
-    currentPage: page,
-    totalPages: Math.ceil(articles.length / itemPerPage),
-    totalItems: articles.length,
+    articles: parsedArticles,
+    currentPage,
+    totalItems,
+    totalPages: Math.ceil(totalItems / itemPerPage),
   };
 }
 

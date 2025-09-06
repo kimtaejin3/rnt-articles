@@ -1,14 +1,32 @@
 import { createClient } from "~/lib/supabase/server";
 
+const itemPerPage = 10;
+
 export const getArticles = async ({ request }: { request: Request }) => {
   const { supabase } = createClient(request);
 
-  const { data: articles } = await supabase.from("article").select("*");
-  console.log(articles);
+  const url = new URL(request.url);
+  const page = parseInt(url.searchParams.get("page") || "1");
 
-  if (!articles) {
-    return [];
-  }
+  const from = (page - 1) * itemPerPage;
+  const to = from + itemPerPage - 1;
 
-  return articles;
+  const {
+    data: articles,
+    count,
+    error,
+  } = await supabase
+    .from("article")
+    .select("*", { count: "exact" })
+    .order("id", { ascending: true })
+    .range(from, to);
+
+  if (error) throw error;
+
+  return {
+    articles: articles ?? [],
+    totalItems: count ?? 0,
+    currentPage: page,
+    itemPerPage,
+  };
 };
