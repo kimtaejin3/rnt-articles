@@ -20,27 +20,21 @@ export async function loader({ request }: Route.LoaderArgs) {
     request,
   });
 
-  const parsedArticles = ArticlesSchema.parse(articles);
-
-  return {
-    articles: parsedArticles,
-    currentPage,
-    totalItems,
-    totalPages: Math.ceil(totalItems / itemPerPage),
-  };
+  try {
+    const parsedArticles = ArticlesSchema.parse(articles);
+    return {
+      articles: parsedArticles,
+      currentPage,
+      totalItems,
+      totalPages: Math.ceil(totalItems / itemPerPage),
+    };
+  } catch {
+    throw new Error("Failed to parse articles: please check the data format");
+  }
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   const { articles, currentPage, totalPages } = loaderData;
-
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("page", value.toString());
-    window.location.href = url.toString();
-  };
 
   return (
     <>
@@ -58,7 +52,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={handlePageChange}
+            onChange={(event, value) => {
+              const url = new URL(window.location.href);
+              url.searchParams.set("page", value.toString());
+            }}
           />
         </Flex>
       </Container>
