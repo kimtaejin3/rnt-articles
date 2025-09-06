@@ -8,6 +8,7 @@ export default function ArticleTable({ articles }: { articles: Article[] }) {
       columns={columns}
       data={articles.map((article) => ({
         ...article,
+        id: article.id + 1,
         title: { title: article.title, link: article.link },
       }))}
     />
@@ -18,7 +19,7 @@ const columns = [
   {
     key: "id",
     header: "번호",
-    width: "30px",
+    width: "100px",
     render: (value: number) => value.toString(),
   },
   {
@@ -32,7 +33,7 @@ const columns = [
     ),
   },
   {
-    key: "myThink",
+    key: "think",
     header: "내 생각",
     width: "auto",
     render: (value: string) => <p>{value}</p>,
@@ -49,10 +50,10 @@ const columns = [
     width: "auto",
     render: (value: string) => <Chip label={value} />,
   },
-  {
-    key: "actions",
-    header: "퀴즈",
-    width: "30px",
-    render: (value: string) => "퀴즈",
-  },
+  // {
+  //   key: "actions",
+  //   header: "퀴즈",
+  //   width: "30px",
+  //   render: (value: string) => "퀴즈",
+  // },
 ];

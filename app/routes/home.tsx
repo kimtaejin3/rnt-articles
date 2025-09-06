@@ -5,6 +5,7 @@ import ArticleTable from "~/components/article/article-table";
 import AddArticle from "~/components/article/add-article";
 import { Pagination } from "@mui/material";
 import Flex from "~/components/ui/flex";
+import { getArticles } from "~/remote/article";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -14,21 +15,22 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
+  const articles = await getArticles({ request });
+
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") || "1");
-  const itemsPerPage = 15;
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const paginatedArticles = mockData.articles.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(mockData.articles.length / itemsPerPage);
+  const itemPerPage = 10;
+  const paginatedArticles = articles.slice(
+    (page - 1) * itemPerPage,
+    page * itemPerPage
+  );
 
   return {
     articles: paginatedArticles,
     currentPage: page,
-    totalPages,
-    totalItems: mockData.articles.length,
+    totalPages: Math.ceil(articles.length / itemPerPage),
+    totalItems: articles.length,
   };
 }
 

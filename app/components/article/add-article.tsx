@@ -17,6 +17,7 @@ import { Form } from "react-router";
 import Flex from "../ui/flex";
 import CustomTextField from "../ui/custom-text-field";
 
+//supabase db: wRUzFSzIk1I14pmQ
 export default function AddArticle() {
   return (
     <Button
@@ -49,6 +50,7 @@ export default function AddArticle() {
               </Flex>
               <DialogContent sx={{ width: "400px" }}>
                 <Form method="post">
+                  <CustomTextField name="link" label="링크" />
                   <CustomTextField name="title" label="제목" />
                   <CustomTextField
                     name="myThink"

@@ -1,7 +1,7 @@
 export interface Article {
   id: number;
   title: string;
-  myThink: string;
+  think: string;
   date: string;
   tag: string;
   link: string;
