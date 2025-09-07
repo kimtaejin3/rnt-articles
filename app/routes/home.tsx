@@ -20,6 +20,8 @@ export async function loader({ request }: Route.LoaderArgs) {
     request,
   });
 
+  console.log(articles);
+
   try {
     const parsedArticles = ArticlesSchema.parse(articles);
     return {
