@@ -3,6 +3,7 @@ import {
   Links,
   Meta,
   Outlet,
+  redirect,
   Scripts,
   ScrollRestoration,
 } from "react-router";
@@ -10,6 +11,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { OverlayProvider } from "overlay-kit";
+import { addArticle } from "./remote/article";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -27,6 +29,11 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Story+Script:wght@400&display=swap",
   },
 ];
+
+export async function action({ request }: Route.ActionArgs) {
+  await addArticle({ request });
+  return redirect("/");
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

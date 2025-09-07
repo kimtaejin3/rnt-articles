@@ -8,7 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { Button, colors, MenuItem } from "@mui/material";
-import { Form } from "react-router";
+import { Form, useSubmit } from "react-router";
 
 const formSchema = z.object({
   link: z.string().min(1, "필수 입력입니다."),
@@ -18,7 +18,14 @@ const formSchema = z.object({
   tag: z.string().min(1, "필수 입력입니다."),
 });
 
-export default function AddArticleForm() {
+interface AddArticleFormProps {
+  onActionAfterSubmit?: () => void;
+}
+
+export default function AddArticleForm({
+  onActionAfterSubmit,
+}: AddArticleFormProps) {
+  const submit = useSubmit();
   const {
     register,
     handleSubmit,
@@ -39,7 +46,8 @@ export default function AddArticleForm() {
     <Form
       method="post"
       onSubmit={handleSubmit((data) => {
-        console.log(data);
+        submit(data, { method: "post" });
+        onActionAfterSubmit?.();
       })}
     >
       <CustomTextField
@@ -96,8 +104,10 @@ export default function AddArticleForm() {
         error={!!errors.tag}
         helperText={errors.tag?.message}
       >
-        <MenuItem value="tag1">performance</MenuItem>
-        <MenuItem value="tag2">component design</MenuItem>
+        <MenuItem value="performance">performance</MenuItem>
+        <MenuItem value="component design">component design</MenuItem>
+        <MenuItem value="ux">ux</MenuItem>
+        <MenuItem value="dx">dx</MenuItem>
       </CustomTextField>
 
       <Button

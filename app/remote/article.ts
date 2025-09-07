@@ -30,3 +30,25 @@ export const getArticles = async ({ request }: { request: Request }) => {
     itemPerPage,
   };
 };
+
+export const addArticle = async ({ request }: { request: Request }) => {
+  const { supabase } = createClient(request);
+
+  const formData = await request.formData();
+  const payload = {
+    title: String(formData.get("title") ?? ""),
+    think: String(formData.get("think") ?? ""),
+    date: String(formData.get("date") ?? ""),
+    tag: String(formData.get("tag") ?? ""),
+    link: String(formData.get("link") ?? ""),
+  };
+
+  const { data, error } = await supabase
+    .from("article")
+    .insert([payload])
+    .select();
+
+  if (error) throw error;
+
+  return data;
+};

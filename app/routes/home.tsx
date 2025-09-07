@@ -5,8 +5,9 @@ import ArticleTable from "~/components/article/article-table";
 import AddArticle from "~/components/article/add-article";
 import { Pagination } from "@mui/material";
 import Flex from "~/components/ui/flex";
-import { getArticles } from "~/remote/article";
+import { addArticle, getArticles } from "~/remote/article";
 import { ArticlesSchema } from "~/types/article";
+import { redirect } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -19,8 +20,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   const { articles, currentPage, totalItems, itemPerPage } = await getArticles({
     request,
   });
-
-  console.log(articles);
 
   try {
     const parsedArticles = ArticlesSchema.parse(articles);
@@ -42,7 +41,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     <>
       <Container>
         <Header>
-          <Title>Read and Think and Solve 📖</Title>
+          <Title>Read and Think 📖</Title>
           <AddArticle />
         </Header>
         <ArticleTable articles={articles} />

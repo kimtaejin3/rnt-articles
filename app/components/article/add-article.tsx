@@ -42,7 +42,7 @@ export default function AddArticle() {
                 </DialogActions>
               </Flex>
               <DialogContent sx={{ width: "400px" }}>
-                <AddArticleForm />
+                <AddArticleForm onActionAfterSubmit={close} />
               </DialogContent>
             </Dialog>
           );
