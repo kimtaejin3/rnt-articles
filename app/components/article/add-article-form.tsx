@@ -108,6 +108,7 @@ export default function AddArticleForm({
         <MenuItem value="component design">component design</MenuItem>
         <MenuItem value="ux">ux</MenuItem>
         <MenuItem value="dx">dx</MenuItem>
+        <MenuItem value="react">react</MenuItem>
       </CustomTextField>
 
       <Button
