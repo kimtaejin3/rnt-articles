@@ -6,9 +6,9 @@ export default function ArticleTable({ articles }: { articles: Article[] }) {
   return (
     <CustomizedTable
       columns={columns}
-      data={articles.map((article) => ({
+      data={articles.map((article, index) => ({
         ...article,
-        id: article.id + 1,
+        index: index + 1,
         title: { title: article.title, link: article.link },
       }))}
     />
@@ -17,7 +17,7 @@ export default function ArticleTable({ articles }: { articles: Article[] }) {
 
 const columns = [
   {
-    key: "id",
+    key: "index",
     header: "번호",
     width: "100px",
     render: (value: number) => value.toString(),
